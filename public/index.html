@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en" class="h-full bg-gray-50">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Campaigns</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: '#fff9db',
+                100: '#fff0b3',
+                200: '#ffe680',
+                300: '#ffdb4d',
+                400: '#ffd11a',
+                500: '#ffc800',
+                600: '#e6b400',
+                700: '#cc9f00',
+                800: '#b38b00',
+                900: '#806300',
+              },
+            },
+            boxShadow: {
+              soft: '0 10px 25px -10px rgba(0,0,0,0.25)',
+            },
+          }
+        }
+      }
+    </script>
+  </head>
+  <body class="h-full">
+    <div class="min-h-full">
+      <header class="sticky top-0 z-30 bg-white/80 backdrop-blur border-b border-gray-200">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-4">
+          <div class="h-10 w-10 rounded-lg bg-gradient-to-tr from-brand-500 to-red-500 shadow-soft grid place-items-center text-white font-bold">MC</div>
+          <div class="flex-1">
+            <h1 class="text-lg sm:text-xl font-semibold text-gray-900">Marketing Campaigns</h1>
+            <p class="text-sm text-gray-500" id="count">Loading campaigns…</p>
+          </div>
+          <a href="/campaigns.json" class="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900">
+            Data
+          </a>
+        </div>
+      </header>
+
+      <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+        <div id="grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      </main>
+
+      <!-- Modal -->
+      <div id="modal" class="hidden fixed inset-0 z-50">
+        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 h-full overflow-y-auto">
+          <div class="bg-white rounded-2xl shadow-soft ring-1 ring-black/5 overflow-hidden">
+            <div class="flex items-center justify-between border-b border-gray-200 p-4">
+              <div class="flex items-center gap-3">
+                <div class="h-8 w-8 rounded-md bg-gradient-to-tr from-brand-500 to-red-500 text-white grid place-items-center text-xs font-bold">MC</div>
+                <div>
+                  <div id="modal-title" class="text-sm font-semibold text-gray-900">Campaign</div>
+                  <div id="modal-subtitle" class="text-xs text-gray-500">Preview of marketing email</div>
+                </div>
+              </div>
+              <button id="modal-close" class="p-2 rounded-md hover:bg-gray-100 text-gray-600 hover:text-gray-900" aria-label="Close">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7A1 1 0 1 0 5.7 7.11L10.59 12l-4.9 4.89a1 1 0 1 0 1.41 1.41L12 13.41l4.89 4.9a1 1 0 0 0 1.41-1.41L13.41 12l4.9-4.89a1 1 0 0 0-.01-1.4Z"/></svg>
+              </button>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3">
+              <!-- Email preview -->
+              <div class="lg:col-span-2 p-6 bg-gray-50">
+                <div class="mx-auto max-w-2xl bg-white ring-1 ring-gray-200 rounded-xl overflow-hidden">
+                  <div class="px-4 py-3 border-b border-gray-200 bg-gray-50 flex items-center gap-3 text-xs text-gray-600">
+                    <div class="h-2 w-2 rounded-full bg-green-500"></div>
+                    <span>Inbox • Marketing</span>
+                  </div>
+                  <div class="p-6 space-y-6" id="email-root">
+                    <!-- Filled dynamically -->
+                  </div>
+                </div>
+              </div>
+              <!-- Campaign overview -->
+              <aside class="lg:border-l border-gray-200 p-6 space-y-6">
+                <div>
+                  <h3 class="text-sm font-semibold text-gray-900">Details</h3>
+                  <dl class="mt-3 grid grid-cols-3 gap-2 text-xs text-gray-600">
+                    <dt class="col-span-1">Created</dt>
+                    <dd id="meta-created" class="col-span-2 text-gray-900">—</dd>
+                    <dt class="col-span-1">Country</dt>
+                    <dd id="meta-country" class="col-span-2">—</dd>
+                    <dt class="col-span-1">Product</dt>
+                    <dd id="meta-product" class="col-span-2">—</dd>
+                  </dl>
+                </div>
+                <div>
+                  <h3 class="text-sm font-semibold text-gray-900">CTA</h3>
+                  <div id="cta-block" class="mt-3 text-sm text-gray-700">
+                    <!-- CTA populated here -->
+                  </div>
+                </div>
+                <div>
+                  <h3 class="text-sm font-semibold text-gray-900">Timing & Targeting</h3>
+                  <div class="mt-3 text-sm text-gray-700" id="meta-timing">—</div>
+                  <div class="mt-2 text-sm text-gray-700" id="meta-targeting">—</div>
+                </div>
+                <div>
+                  <h3 class="text-sm font-semibold text-gray-900">Legal</h3>
+                  <div class="mt-3 text-xs text-gray-600" id="meta-legal">—</div>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const state = { campaigns: [], selectedIndex: -1 };
+
+      function escapeHtml(str) {
+        return String(str || '')
+          .replaceAll('&', '&amp;')
+          .replaceAll('<', '&lt;')
+          .replaceAll('>', '&gt;')
+          .replaceAll('"', '&quot;')
+          .replaceAll("'", '&#039;');
+      }
+
+      function pickHeroAsset(assets) {
+        if (!Array.isArray(assets)) return null;
+        const hero = assets.find(a => /hero/i.test(a?.name || '')) || assets.find(a => /hero/i.test(a?.image?.prompt || ''));
+        const firstImg = assets.find(a => (a?.image?.url || a?.url) && !a.error);
+        return hero || firstImg || null;
+      }
+
+      function textOr(obj, ...keys) {
+        for (const k of keys) {
+          const v = (obj && obj[k]) ?? undefined;
+          if (typeof v === 'string' && v.trim()) return v.trim();
+        }
+        return '';
+      }
+
+      function titleFor(c, idx) {
+        return textOr(c, 'offer_summary', 'creative_direction') || `Campaign ${idx + 1}`;
+      }
+
+      function subtitleFor(c) {
+        return textOr(c, 'timing_window', 'targeting', 'product') || '';
+      }
+
+      function emailBodyFrom(template) {
+        if (!template) return '';
+        const body = template.body || template.text || '';
+        if (!body) return '';
+        const blocks = String(body).trim().split(/\n\n+/);
+        return blocks.map(p => `<p class="leading-7 text-gray-700">${escapeHtml(p)}</p>`).join('');
+      }
+
+      function renderGrid() {
+        const grid = document.getElementById('grid');
+        const count = document.getElementById('count');
+        count.textContent = `${state.campaigns.length} campaign${state.campaigns.length === 1 ? '' : 's'}`;
+
+        if (!state.campaigns.length) {
+          grid.innerHTML = `<div class="col-span-full text-center text-gray-500">No campaigns yet. POST to <code class='font-mono text-xs bg-gray-100 px-1.5 py-0.5 rounded'>/create-campaign</code>.</div>`;
+          return;
+        }
+
+        grid.innerHTML = state.campaigns.map((c, i) => {
+          const hero = pickHeroAsset(c.assets);
+          const img = hero?.image?.url || hero?.url || '';
+          const title = titleFor(c, i);
+          const alt = hero?.alt_text || hero?.name || 'campaign hero';
+          return `
+            <button data-index="${i}" class="group text-left bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow focus:outline-none focus:ring-2 focus:ring-brand-500">
+              <div class="aspect-[4/3] bg-gray-100 overflow-hidden">
+                ${img ? `<img src="${img}" alt="${escapeHtml(alt)}" class="h-full w-full object-cover group-hover:scale-[1.02] transition-transform" />` : ''}
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm font-semibold text-gray-900 line-clamp-2">${escapeHtml(title)}</h3>
+              </div>
+            </button>
+          `;
+        }).join('');
+
+        // Attach click listeners
+        grid.querySelectorAll('button[data-index]').forEach(btn => {
+          btn.addEventListener('click', () => openModal(parseInt(btn.dataset.index, 10)));
+        });
+      }
+
+      function openModal(index) {
+        state.selectedIndex = index;
+        const c = state.campaigns[index];
+        const modal = document.getElementById('modal');
+        const titleEl = document.getElementById('modal-title');
+        const subtitleEl = document.getElementById('modal-subtitle');
+        const createdEl = document.getElementById('meta-created');
+        const countryEl = document.getElementById('meta-country');
+        const productEl = document.getElementById('meta-product');
+        const timingEl = document.getElementById('meta-timing');
+        const targetingEl = document.getElementById('meta-targeting');
+        const legalEl = document.getElementById('meta-legal');
+        const ctaEl = document.getElementById('cta-block');
+
+        titleEl.textContent = titleFor(c, index);
+        subtitleEl.textContent = 'Email rendering preview';
+        createdEl.textContent = c.created_at || '—';
+        countryEl.textContent = c.country || '—';
+        productEl.textContent = c.product || '—';
+        timingEl.textContent = c.timing_window || '—';
+        targetingEl.textContent = c.targeting || '—';
+        legalEl.textContent = c.legal || '—';
+
+        // CTA aside (not inside the email)
+        const ctaText = (typeof c.cta === 'string') ? c.cta : (c.cta?.text || '');
+        const ctaHref = (typeof c.cta === 'object') ? (c.cta.url || '#') : '#';
+        ctaEl.innerHTML = ctaText
+          ? `<a href="${ctaHref}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-brand-500 text-gray-900 font-medium shadow-soft hover:brightness-95">
+              <svg xmlns='http://www.w3.org/2000/svg' class='h-4 w-4' viewBox='0 0 24 24' fill='currentColor'><path d='M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7Z'/></svg>
+              ${escapeHtml(ctaText)}
+            </a>`
+          : '<span class="text-gray-400">—</span>';
+
+        // Build email
+        const emailRoot = document.getElementById('email-root');
+        const hero = pickHeroAsset(c.assets);
+        const heroUrl = hero?.image?.url || hero?.url || '';
+        const subtitle = subtitleFor(c);
+        const bodyHtml = emailBodyFrom(c.email_template);
+
+        emailRoot.innerHTML = `
+          <div class="space-y-4">
+            <div class="text-xs text-gray-500">From: Marketing Team &lt;marketing@example.com&gt;</div>
+            <div class="text-lg font-semibold text-gray-900">${escapeHtml(titleFor(c, index))}</div>
+            ${subtitle ? `<div class="text-sm text-gray-600">${escapeHtml(subtitle)}</div>` : ''}
+          </div>
+          ${heroUrl ? `<img src="${heroUrl}" alt="${escapeHtml(hero?.alt_text || 'hero')}" class="mt-4 w-full rounded-lg border border-gray-200" />` : ''}
+          <div class="mt-6 space-y-4">${bodyHtml || `<p class='leading-7 text-gray-700'>Hi there,</p><p class='leading-7 text-gray-700'>Here’s a preview of your campaign email content. Add an <code class='font-mono bg-gray-100 px-1.5 py-0.5 rounded text-xs'>email_template.body</code> to customize.</p>`}</div>
+          ${Array.isArray(c.assets) && c.assets.length > 1 ? `
+            <div class="mt-8">
+              <div class="text-sm font-medium text-gray-900 mb-3">Additional assets</div>
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                ${c.assets.filter(a => (a?.image?.url || a?.url) && a !== hero).slice(0,6).map(a => `
+                  <figure class="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                    <img src="${a.image?.url || a.url}" alt="${escapeHtml(a.alt_text || a.name || 'asset')}" class="h-28 w-full object-cover" />
+                    <figcaption class="p-2 text-[11px] text-gray-600 truncate">${escapeHtml(a.name || 'asset')}</figcaption>
+                  </figure>
+                `).join('')}
+              </div>
+            </div>
+          ` : ''}
+        `;
+
+        modal.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+      }
+
+      function closeModal() {
+        const modal = document.getElementById('modal');
+        modal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+        state.selectedIndex = -1;
+      }
+
+      document.getElementById('modal-close').addEventListener('click', closeModal);
+      document.getElementById('modal').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget || e.target.classList.contains('bg-black/50')) closeModal();
+      });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+      async function load() {
+        try {
+          const res = await fetch('/campaigns.json', { cache: 'no-store' });
+          const payload = res.ok ? await res.json() : { data: [] };
+          state.campaigns = Array.isArray(payload.data) ? payload.data : [];
+        } catch (e) {
+          console.warn('Failed to fetch campaigns.json', e);
+          state.campaigns = [];
+        }
+        renderGrid();
+      }
+
+      load();
+    </script>
+  </body>
+</html>

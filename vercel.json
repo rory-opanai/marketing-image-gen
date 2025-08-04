@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "functions": {
+    "api/[...all].js": {
+      "maxDuration": 60,
+      "memory": 1024
+    }
+  },
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api/$1" }
+  ]
+}
+
