@@ -74,46 +74,6 @@
       ]
     },
     {
-      "id": "1754311165194_n5bbi6",
-      "created_at": "2025-08-04T12:39:25.194Z",
-      "offer_summary": "Buy any iced coffee on three separate visits this summer and get your next iced coffee free.",
-      "mechanic": "Activate in GO+ → Buy any iced coffee on 3 separate visits (min. £2 each) → Scan app/card/key fob each time → Receive a voucher for 1 free iced coffee after your 3rd purchase.",
-      "timing_window": "10 June – 31 August 2025",
-      "targeting": "GO+ members who purchase coffee or cold beverages; NFR segments: Independent Enthusiasts, Spontaneous Indulgers, Quick Fixer.",
-      "creative_direction": "Hero: ‘stamp card’ visual with three iced coffees ticked and one glowing ‘FREE’. Secondary: sunny forecourt walk-in with iced coffee in hand. Optional subtle motion/GIF for stamps filling in.",
-      "cta": {
-        "text": "Activate coffee stamps",
-        "url": "PLACEHOLDER"
-      },
-      "legal": "UK GO+ members only. Activation required before qualifying purchases. Three qualifying iced coffee purchases (each ≥£2, any size unless excluded) must be made on separate visits between 10/06/25 – 31/08/25 at participating UK stations. Free iced coffee voucher issued to GO+ within 24 hours of the 3rd qualifying purchase; voucher valid 14 days from issue. Subject to availability. Excludes multi-buys and other coffee offers. No cash alternative. Full T&Cs apply. For participating sites, see: PLACEHOLDER.",
-      "email_template": {
-        "subject_line": "Buy 3 iced coffees, get 1 free",
-        "preheader": "Scan. Sip. Repeat. Your summer coffee is on us after three visits.",
-        "body": "Scan. Sip. Repeat.\n\n{{member_name}}, make the most of sunny days with a cool reward. Pick up any iced coffee on three separate visits and your next one is free — easy.\n\nWhy it’s a win\n• Your go-to cool down, now with a freebie\n• Works with your routine — just scan each visit\n• Ready fast for life on the move\n\nHow it works\n1) Activate the offer in Shell GO+\n2) Buy any iced coffee on three separate visits (min. £2 each) between 10 June – 31 August 2025\n3) Scan your GO+ app, card or key fob each time\n4) Get a free iced coffee voucher after your 3rd purchase (valid 14 days)\n\nPrimary CTA: Activate coffee stamps (PLACEHOLDER)\nSecondary CTA: Find your nearest station (PLACEHOLDER)\n\nUK GO+ members only. Activation required before qualifying purchases. Purchases must be on separate visits. Voucher terms apply. Full T&Cs available at the link."
-      },
-      "design_notes": "Use a clean stamp-card motif and clear progress cues. Shell Yellow/Red accents on white; simple iconography for ‘3 purchases → 1 free’. Keep body copy scannable. Optimise for mobile screens.",
-      "production_notes": "Insert live GO+ activation deep link and station finder URLs. Ensure UK forecourt/store imagery: UK plates, right-hand drive, diverse customers, in-store scan scenes. No CSC fueling visuals; HSSE-compliant behaviours. Ensure voucher delivery flow aligns with MAP and redemption at POS.",
-      "country": "UK",
-      "product": "Iced coffee (Shell Café/Costa Express where available)",
-      "assets": [
-        {
-          "name": "Hero",
-          "prompt": "Four iced coffees on a simple grid; three stamped/checked, the fourth highlighted ‘FREE’; bright summer lighting; Shell colour accents.",
-          "alt_text": "Iced coffee stamp card — three done, one free"
-        },
-        {
-          "name": "Secondary image",
-          "prompt": "Customer exiting UK Shell Select/Café holding iced coffee; sunny day; station branding visible; safe pedestrian zone.",
-          "alt_text": "Customer leaves Shell shop with iced coffee"
-        },
-        {
-          "name": "Animated/GIF option",
-          "prompt": "Subtle animation of stamps filling with each ‘scan’ ping; final tile flashes ‘FREE’ then settles.",
-          "alt_text": "Stamps filling animation for iced coffee progress"
-        }
-      ]
-    },
-    {
       "id": "1754311222652_vo70y4",
       "created_at": "2025-08-04T12:40:22.653Z",
       "offer_summary": "Buy any iced coffee on three separate visits this summer and get your next iced coffee free.",
