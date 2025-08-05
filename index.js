@@ -86,6 +86,12 @@ function log(...args) {
   console.log(new Date().toISOString(), ...args);
 }
 
+// Normalize literal "\n" sequences in input strings to actual newlines
+function normalizeNewlines(value) {
+  if (typeof value !== 'string') return value;
+  return value.split('\\n').join('\n');
+}
+
 // Ensure folders exist at startup (no-op if on read-only FS like Vercel)
 async function ensureDirs() {
   try {
@@ -255,21 +261,33 @@ async function createCampaignFromBody(body, onProgress) {
   if (Array.isArray(asset_list)) {
     // Accept either array of strings or objects
     assets = asset_list.map((item, idx) => {
-      if (typeof item === 'string') return { name: `asset_${idx + 1}`, prompt: item };
+      if (typeof item === 'string') return { name: `asset_${idx + 1}`, prompt: normalizeNewlines(item) };
       const name = item.name || item.title || `asset_${idx + 1}`;
-      const prompt = item.prompt || item.description || '';
-      return { name, prompt, alt_text: item.alt_text, links: item.links, design_notes: item.design_notes };
+      const prompt = normalizeNewlines(item.prompt || item.description || '');
+      return {
+        name,
+        prompt,
+        alt_text: normalizeNewlines(item.alt_text),
+        links: item.links,
+        design_notes: normalizeNewlines(item.design_notes),
+      };
     });
   } else if (assetsRaw && typeof assetsRaw === 'object') {
     // Object map: { "Hero": "prompt...", "Secondary": "..." }
     assets = Object.entries(assetsRaw).map(([name, val]) => {
-      if (typeof val === 'string') return { name, prompt: val };
-      return { name, prompt: val.prompt || val.description || '', alt_text: val.alt_text, links: val.links, design_notes: val.design_notes };
+      if (typeof val === 'string') return { name, prompt: normalizeNewlines(val) };
+      return {
+        name,
+        prompt: normalizeNewlines(val.prompt || val.description || ''),
+        alt_text: normalizeNewlines(val.alt_text),
+        links: val.links,
+        design_notes: normalizeNewlines(val.design_notes),
+      };
     });
   } else if (body && typeof body === 'object') {
     // Heuristic: treat all top-level string fields that look like assets
     const candidateKeys = Object.keys(body).filter(k => /hero|secondary|mosaic|image/i.test(k));
-    assets = candidateKeys.map(k => ({ name: k, prompt: String(body[k]) }));
+    assets = candidateKeys.map(k => ({ name: k, prompt: normalizeNewlines(String(body[k])) }));
   }
 
   if (!assets.length) {
@@ -285,24 +303,24 @@ async function createCampaignFromBody(body, onProgress) {
   const baseCampaign = {
     id: campaignId,
     created_at: new Date().toISOString(),
-    offer_summary,
-    mechanic,
-    timing_window,
-    targeting,
-    creative_direction,
-    cta,
-    legal,
-    email_template,
-    design_notes,
-    production_notes,
+    offer_summary: normalizeNewlines(offer_summary),
+    mechanic: normalizeNewlines(mechanic),
+    timing_window: normalizeNewlines(timing_window),
+    targeting: normalizeNewlines(targeting),
+    creative_direction: normalizeNewlines(creative_direction),
+    cta: normalizeNewlines(cta),
+    legal: normalizeNewlines(legal),
+    email_template: normalizeNewlines(email_template),
+    design_notes: normalizeNewlines(design_notes),
+    production_notes: normalizeNewlines(production_notes),
     country,
     product,
     assets: assets.map((a) => ({
       name: a.name || '',
-      prompt: (a.prompt || '').trim(),
-      alt_text: a.alt_text,
+      prompt: normalizeNewlines(a.prompt || '').trim(),
+      alt_text: normalizeNewlines(a.alt_text),
       links: a.links,
-      design_notes: a.design_notes,
+      design_notes: normalizeNewlines(a.design_notes),
     })),
   };
   await upsertCampaignBase(baseCampaign);
@@ -433,7 +451,6 @@ app.post('/create-campaign', async (req, res) => {
     res.status(202).json({
       task_id: id,
       status: 'accepted',
-      status_url: statusUrl,
       app_url: APP_URL,
       message: 'Campaign creation queued',
     });
