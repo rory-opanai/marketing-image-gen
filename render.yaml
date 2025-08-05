@@ -9,6 +9,8 @@ services:
         value: production
       - key: IMAGES_DIR
         value: /opt/render/project/src/uploads/images
+      - key: APP_URL
+        value: https://shell-marketing-imagegen.onrender.com
     disks:
       - name: uploads
         mountPath: /opt/render/project/src/uploads

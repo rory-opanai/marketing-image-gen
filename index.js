@@ -405,7 +405,6 @@ app.post('/create-campaign', async (req, res) => {
       status: 'queued',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-      status_url: statusUrl,
       app_url: APP_URL,
     };
     tasks.set(id, task);
@@ -453,7 +452,7 @@ app.get('/tasks/:id', (req, res) => {
   }
   // Always include app_url; include result or error depending on state
   const { status, status_url, result, error, created_at, updated_at, progress } = task;
-  res.json({ id, status, status_url, app_url: APP_URL, created_at, updated_at, progress, result: status === 'done' ? result : undefined, error: status === 'error' ? error : undefined });
+  res.json({ id, status, app_url: APP_URL, created_at, updated_at, progress, result: status === 'done' ? result : undefined, error: status === 'error' ? error : undefined });
 });
 
 // Image generation via OpenAI Images API
