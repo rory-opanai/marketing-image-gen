@@ -14,26 +14,71 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY || '';
 const ROOT_DIR = __dirname;
 const PUBLIC_DIR = path.join(ROOT_DIR, 'public');
 
-// Writable paths: on Vercel, the deployment bundle is read-only; only /tmp is writable.
-const IS_VERCEL = !!process.env.VERCEL || !!process.env.NOW_REGION;
-const WRITE_BASE_DIR = IS_VERCEL ? '/tmp' : ROOT_DIR;
-const READONLY_IMAGES_DIR = path.join(PUBLIC_DIR, 'images');
-// Where we will write new images:
-const IMAGES_DIR = IS_VERCEL ? path.join(WRITE_BASE_DIR, 'images') : READONLY_IMAGES_DIR;
-// Where we will write/read campaigns data:
-const CAMPAIGNS_FILE = IS_VERCEL ? path.join(WRITE_BASE_DIR, 'campaign.json') : path.join(ROOT_DIR, 'campaign.json');
+// Writable paths for Render/basic Node: prefer IMAGES_DIR env; default to uploads/images
+const UPLOADS_ROOT = process.env.UPLOADS_DIR || (process.env.IMAGES_DIR ? path.dirname(process.env.IMAGES_DIR) : path.join(ROOT_DIR, 'uploads'));
+const IMAGES_DIR = process.env.IMAGES_DIR || path.join(UPLOADS_ROOT, 'images');
+const PUBLIC_IMAGES_DIR = path.join(PUBLIC_DIR, 'images');
+const CAMPAIGNS_FILE = process.env.CAMPAIGNS_FILE || path.join(UPLOADS_ROOT, 'campaigns.json');
 
-// Supabase configuration
-const { createClient } = require('@supabase/supabase-js');
-const SUPABASE_URL = process.env.SUPABASE_URL || '';
-const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_KEY || process.env.SUPABASE_ANON_KEY || '';
-const SUPABASE_BUCKET = process.env.SUPABASE_BUCKET || 'images';
-let supabase = null;
-if (SUPABASE_URL && SUPABASE_KEY) {
-  supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
-    auth: { persistSession: false },
-    global: { headers: { 'X-Client-Info': 'marketing-campaign/1.0.0' } },
+// Filesystem campaign store helpers (Render/local)
+// Persist campaigns at CAMPAIGNS_FILE in the shape: { data: [...] }
+async function readCampaignsList() {
+  try {
+    const raw = await fs.readFile(CAMPAIGNS_FILE, 'utf8');
+    const json = JSON.parse(raw);
+    if (Array.isArray(json)) return json;
+    if (Array.isArray(json?.data)) return json.data;
+  } catch (_) {
+    // Fallback to legacy root campaign.json if present
+    try {
+      const raw = await fs.readFile(path.join(ROOT_DIR, 'campaign.json'), 'utf8');
+      const json = JSON.parse(raw);
+      if (Array.isArray(json?.data)) return json.data;
+      if (Array.isArray(json)) return json;
+    } catch (_) {}
+  }
+  return [];
+}
+
+async function writeCampaignsList(list) {
+  const dir = path.dirname(CAMPAIGNS_FILE);
+  if (!fssync.existsSync(dir)) fssync.mkdirSync(dir, { recursive: true });
+  await fs.writeFile(CAMPAIGNS_FILE, JSON.stringify({ data: list }, null, 2), 'utf8');
+  log('Campaigns written to', CAMPAIGNS_FILE);
+}
+
+async function updateCampaignById(id, updater) {
+  const list = await readCampaignsList();
+  let idx = list.findIndex((c) => c && c.id === id);
+  if (idx === -1) {
+    list.unshift({ id });
+    idx = 0;
+  }
+  const current = list[idx] || { id };
+  try {
+    await Promise.resolve(updater(current));
+  } catch (e) {
+    console.error('Error applying campaign updater for id:', id, e);
+  }
+  current.updated_at = new Date().toISOString();
+  list[idx] = current;
+  await writeCampaignsList(list);
+}
+
+function updateCampaignAssetSafe(id, assetIndex, assetData) {
+  return updateCampaignById(id, (c) => {
+    if (!Array.isArray(c.assets)) c.assets = [];
+    c.assets[assetIndex] = assetData;
   });
+}
+
+async function upsertCampaignBase(campaign) {
+  const list = await readCampaignsList();
+  const idx = list.findIndex((c) => c && c.id === campaign.id);
+  if (idx === -1) list.unshift(campaign);
+  else list[idx] = { ...(list[idx] || {}), ...campaign };
+  await writeCampaignsList(list);
+  log('Campaign persisted:', campaign.id);
 }
 
 // Simple logger
@@ -47,6 +92,10 @@ async function ensureDirs() {
     if (!fssync.existsSync(PUBLIC_DIR)) {
       log('Creating PUBLIC_DIR:', PUBLIC_DIR);
       fssync.mkdirSync(PUBLIC_DIR, { recursive: true });
+    }
+    if (!fssync.existsSync(UPLOADS_ROOT)) {
+      log('Creating UPLOADS_ROOT:', UPLOADS_ROOT);
+      fssync.mkdirSync(UPLOADS_ROOT, { recursive: true });
     }
     if (!fssync.existsSync(IMAGES_DIR)) {
       log('Creating IMAGES_DIR:', IMAGES_DIR);
@@ -62,10 +111,10 @@ async function ensureDirs() {
 app.use(express.json({ limit: '4mb' }));
 
 // Serve writable images dir first (e.g., /tmp/images on Vercel), then fallback to bundled public/images
-if (IMAGES_DIR !== READONLY_IMAGES_DIR) {
+if (IMAGES_DIR !== PUBLIC_IMAGES_DIR) {
   app.use('/images', express.static(IMAGES_DIR));
 }
-app.use('/images', express.static(READONLY_IMAGES_DIR));
+app.use('/images', express.static(PUBLIC_IMAGES_DIR));
 
 // Serve other static assets (index.html, etc.) from the bundled public directory
 app.use(express.static(PUBLIC_DIR));
@@ -176,44 +225,7 @@ const countryGuidelines = [
 // In-memory task registry for async processing
 const tasks = new Map(); // id -> { id, status, created_at, updated_at, status_url, app_url, result?, error? }
 
-// Supabase-backed campaign persistence
-async function supaUpsertCampaign(campaign) {
-  if (!supabase) throw new Error('Supabase not configured');
-  const row = { id: campaign.id, data: campaign, created_at: campaign.created_at, updated_at: campaign.updated_at || new Date().toISOString() };
-  const { error } = await supabase.from('campaigns').upsert(row, { onConflict: 'id' });
-  if (error) throw error;
-  log('Campaign upserted in Supabase:', campaign.id);
-}
-
-async function supaGetCampaign(id) {
-  if (!supabase) throw new Error('Supabase not configured');
-  const { data, error } = await supabase.from('campaigns').select('data').eq('id', id).single();
-  if (error) throw error;
-  return data?.data || null;
-}
-
-async function supaUpdateCampaignById(id, updater) {
-  if (!supabase) throw new Error('Supabase not configured');
-  // Fetch existing
-  let current = await supaGetCampaign(id);
-  if (!current) current = { id };
-  try {
-    await Promise.resolve(updater(current));
-  } catch (e) {
-    console.error('Error applying campaign updater for id:', id, e);
-  }
-  current.updated_at = new Date().toISOString();
-  const { error } = await supabase.from('campaigns').upsert({ id, data: current, updated_at: current.updated_at });
-  if (error) throw error;
-  log('Campaign updated in Supabase:', id);
-}
-
-function updateCampaignAssetSafe(id, assetIndex, assetData) {
-  return supaUpdateCampaignById(id, (c) => {
-    if (!Array.isArray(c.assets)) c.assets = [];
-    c.assets[assetIndex] = assetData;
-  });
-}
+// File-based campaign persistence helpers are defined above.
 
 // Helper: normalize and create a campaign from request body, persist to campaign.json
 async function createCampaignFromBody(body, onProgress) {
@@ -293,8 +305,7 @@ async function createCampaignFromBody(body, onProgress) {
       design_notes: a.design_notes,
     })),
   };
-  if (!supabase) throw Object.assign(new Error('Supabase not configured'), { status: 500 });
-  await supaUpsertCampaign(baseCampaign);
+  await upsertCampaignBase(baseCampaign);
 
   // Generate images for each asset with limited concurrency
   const generated = new Array(assets.length);
@@ -359,7 +370,7 @@ async function createCampaignFromBody(body, onProgress) {
     ...baseCampaign,
     assets: generated,
   };
-  await supaUpdateCampaignById(campaignId, (c) => {
+  await updateCampaignById(campaignId, (c) => {
     Object.assign(c, campaign);
   });
 
@@ -369,18 +380,10 @@ async function createCampaignFromBody(body, onProgress) {
 // Expose campaigns JSON for the gallery to load
 app.get('/campaigns.json', async (req, res) => {
   try {
-    if (!supabase) return res.json({ data: [] });
-    const { data, error } = await supabase
-      .from('campaigns')
-      .select('data')
-      .order('created_at', { ascending: false })
-      .limit(500);
-    if (error) throw error;
-    const list = (data || []).map(r => r.data);
-    log('Served campaigns from Supabase:', list.length);
+    const list = await readCampaignsList();
     res.json({ data: list });
   } catch (err) {
-    console.error('Failed to read campaigns from Supabase:', err);
+    console.error('Failed to read campaigns from file:', err);
     res.status(500).json({ error: 'Failed to read campaigns' });
   }
 });
@@ -474,26 +477,16 @@ async function callOpenAIImage(prompt, { country, product } = {}) {
   </foreignObject>
 </svg>`;
     const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}-placeholder.svg`;
-    let publicUrl = `/images/${filename}`;
-    if (supabase) {
-      log('Uploading SVG placeholder to Supabase Storage');
-      const { error: upErr } = await supabase.storage.from(SUPABASE_BUCKET).upload(filename, Buffer.from(svg, 'utf8'), { contentType: 'image/svg+xml', upsert: false });
-      if (upErr && upErr.message && !/The resource already exists/i.test(upErr.message)) {
-        log('Supabase upload error (placeholder):', upErr.message);
-      }
-      const pub = supabase.storage.from(SUPABASE_BUCKET).getPublicUrl(filename);
-      publicUrl = pub.data?.publicUrl || publicUrl;
-    } else {
-      const filePath = path.join(IMAGES_DIR, filename);
-      await fs.writeFile(filePath, svg, 'utf8');
-      log('SVG placeholder written to', filePath);
-      publicUrl = `/images/${filename}`;
-    }
+    const filePath = path.join(IMAGES_DIR, filename);
+    await fs.writeFile(filePath, svg, 'utf8');
+    log('SVG placeholder written to', filePath);
+    const publicUrl = `/images/${filename}`;
     return {
       country: typeof country === 'string' ? country : (country?.name || ''),
       product: typeof product === 'string' ? product : (product?.name || ''),
       prompt,
       filename,
+      path: filePath,
       url: publicUrl,
       placeholder: true,
     };
@@ -561,24 +554,10 @@ async function callOpenAIImage(prompt, { country, product } = {}) {
   const productName = typeof product === 'string' ? product : (product?.name || '');
 
   const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}-${slug(countryName)}-${slug(productName)}.png`;
-  let publicUrl = `/images/${filename}`;
-  if (supabase) {
-    log('Uploading image to Supabase Storage');
-    const { error: upErr } = await supabase.storage.from(SUPABASE_BUCKET).upload(filename, buffer, { contentType: 'image/png', upsert: false });
-    if (upErr && upErr.message && !/The resource already exists/i.test(upErr.message)) {
-      log('Supabase upload error:', upErr.message);
-      const err = new Error(`Supabase upload failed: ${upErr.message}`);
-      err.status = 500;
-      throw err;
-    }
-    const pub = supabase.storage.from(SUPABASE_BUCKET).getPublicUrl(filename);
-    publicUrl = pub.data?.publicUrl || publicUrl;
-  } else {
-    const filePath = path.join(IMAGES_DIR, filename);
-    await fs.writeFile(filePath, buffer);
-    log('Image written to', filePath);
-    publicUrl = `/images/${filename}`;
-  }
+  const filePath = path.join(IMAGES_DIR, filename);
+  await fs.writeFile(filePath, buffer);
+  log('Image written to', filePath);
+  const publicUrl = `/images/${filename}`;
 
   return {
     country: countryName,
@@ -587,6 +566,7 @@ async function callOpenAIImage(prompt, { country, product } = {}) {
     productDescription: typeof product === 'object' ? (product?.description || '') : '',
     prompt,
     filename,
+    path: filePath,
     url: publicUrl,
   };
 }

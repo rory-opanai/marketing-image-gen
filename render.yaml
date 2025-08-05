@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: marketing-image-shell
+    env: node
+    buildCommand: npm install
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: IMAGES_DIR
+        value: /opt/render/project/src/uploads/images
+    disks:
+      - name: uploads
+        mountPath: /opt/render/project/src/uploads
+        sizeGB: 4 
