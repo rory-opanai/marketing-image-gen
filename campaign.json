@@ -1,151 +1,88 @@
 {
   "data": [
     {
-      "id": "1754306958503_uo5si5",
-      "created_at": "2025-08-04T11:29:18.503Z",
-      "offer_summary": "Fill up with Shell V-Power twice this summer and enjoy 500 bonus GO+ points.",
-      "mechanic": "Activate in GO+ → Fill up with Shell V-Power ≥30L on two separate visits → Scan app/card/key fob → Get 500 bonus points.",
-      "timing_window": "10 June – 31 August 2025",
-      "targeting": "GO+ members in Premium/V-Power segment; Quality Believers, Road Warriors, Spontaneous Indulgers.",
-      "creative_direction": "Hero image of a UK family or friends loading a car for a trip, bright summer tones, Costa iced drink in shot, Shell forecourt backdrop. Light sunshine flare for optimism.",
+      "id": "20250901_mcfc_homekitlaunch",
+      "created_at": "2025-08-15T10:15:00.000Z",
+      "offer_summary": "Celebrate the 2025/26 season launch — get early access to the new Manchester City home kit and receive 20% off stadium tour tickets.",
+      "mechanic": "Pre-order or purchase the official 2025/26 home kit → Scan membership/app ID at checkout → Receive a 20% voucher for the Etihad Stadium Tour.",
+      "timing_window": "15 August – 30 September 2025",
+      "targeting": "Cityzens members, Loyal Supporters, Global Followers.",
+      "creative_direction": "Hero image of Erling Haaland and a young fan unveiling the new home kit inside the Etihad. Bright sky blue dominance with navy contrast. Background hints of stadium seating and cheering fans.",
       "cta": {
-        "text": "Activate now",
+        "text": "Pre-order now",
         "url": "PLACEHOLDER"
       },
-      "legal": "UK GO+ members only. Activation required before qualifying purchases. Min. 30L Shell V-Power per transaction. Two qualifying purchases required between 10/06/25 – 31/08/25. Points awarded within 14 days after second purchase. Participating stations only. Full T&Cs apply.",
+      "legal": "Offer valid 15/08/25 – 30/09/25. Limited to official Man City stores (Etihad, Arndale, online). Stadium tour voucher valid for 90 days from issue. Cannot be combined with other promotions. Subject to availability. Full T&Cs apply.",
       "email_template": {
-        "subject_line": "Earn 500 bonus points for your summer road trips",
-        "preheader": "Fuel twice with Shell V-Power and make your adventures even more rewarding.",
-        "body": "Drive into summer with extra rewards\n\n{{member_name}}, summer’s calling. Make the most of every journey with Shell V-Power — and we’ll add 500 bonus GO+ points to your account.\n\nWhy Shell V-Power this summer?\n• Keeps your engine performing at its best\n• Protects against gunk and corrosion\n• Designed to get the most out of every mile\n\nHow it works:\n1) Activate the offer in Shell GO+\n2) Fill up with ≥30L Shell V-Power on two separate visits between 10 June – 31 August 2025\n3) Scan your GO+ app, card or key fob each time\n4) Receive 500 bonus points within 14 days\n\nPrimary CTA: Activate now (PLACEHOLDER)\nSecondary CTA: Find your nearest station (PLACEHOLDER)\n\nHelps to maintain engine performance when compared to ordinary fuels. UK GO+ members only. Activation required before qualifying purchases. Minimum 30L Shell V-Power per transaction. Two qualifying purchases must be made between 10/06/25 and 31/08/25. Bonus points awarded within 14 days after second purchase. Points have no cash value. Participating stations only. See full T&Cs here."
-      },
-      "design_notes": "Use Shell Yellow/Red 4:1 ratio on white; warm, natural lighting; friendly type hierarchy; avoid over-clutter.",
-      "production_notes": "Replace CTA placeholders with live GO+ activation and station finder URLs. Ensure imagery meets UK vehicle/forecourt compliance (RHD, UK plates, diverse cast). Maintain HSSE compliance — no in-car phone use, refuelling shown safely.",
+        "subject_line": "Be first in the new City kit + unlock your stadium tour discount",
+        "preheader": "Pre-order the 2025/26 kit and we’ll add 20% off your Etihad Stadium Tour.",
+        "body": "It’s here, {{member_name}} — the 2025/26 Manchester City home kit.\n\nWear it with pride, on and off the pitch, and celebrate like a champion. As a bonus, you’ll receive 20% off your next Etihad Stadium Tour when you order today.\n\nWhy this kit matters:\n• Inspired by Manchester’s industrial heritage\n• Crafted for performance and comfort\n• The ultimate way to show your City pride\n\nHow it works:\n1) Pre-order or purchase the 2025/26 home kit\n2) Scan your Cityzens membership/app ID\n3) Receive a 20% Stadium Tour voucher (valid 90 days)\n\nPrimary CTA: Pre-order now (PLACEHOLDER)\nSecondary CTA: Learn more about the kit (PLACEHOLDER)\n\nOffer valid for Cityzens members. Tour voucher terms apply. Subject to availability.",
+      "design_notes": "Keep crest always visible. 60% sky blue, 20% white, 15% navy, 5% Etihad Gold. Use clean stadium and player imagery. Maintain authenticity — no stock sports visuals.",
+      "production_notes": "Insert live store links. Ensure kit photography meets brand style (action shots, fan moments, stadium backdrops). Avoid sponsor/logo alterations. Use official Pantone colors.",
       "country": "UK",
-      "product": "Shell V-Power",
+      "product": "2025/26 Home Kit",
       "assets": [
         {
           "name": "Hero",
-          "prompt": "UK family/friends loading car with luggage, summer sunshine, Shell station in background, Costa iced drink in foreground.",
-          "alt_text": "Family preparing for summer road trip at Shell",
-          "image": {
-            "country": "UK",
-            "countryDescription": "",
-            "product": "Shell V-Power",
-            "productDescription": "",
-            "prompt": "UK family/friends loading car with luggage, summer sunshine, Shell station in background, Costa iced drink in foreground.",
-            "filename": "1754306877465-1ert2i-uk-shell-v-power.png",
-            "path": "/Users/pap/development/shell/marketing-campaign/public/images/1754306877465-1ert2i-uk-shell-v-power.png",
-            "url": "/images/1754306877465-1ert2i-uk-shell-v-power.png"
-          },
-          "url": "/images/1754306877465-1ert2i-uk-shell-v-power.png"
+          "prompt": "Erling Haaland presenting the new Manchester City home kit alongside a young fan inside Etihad Stadium, sky blue dominance, cheering fans blurred in background.",
+          "alt_text": "Haaland and young fan reveal 2025/26 home kit",
+          "url": "public/images/ManCity/player-fan.png"
         },
         {
           "name": "Secondary image",
-          "prompt": "Close-up pump shot of Shell V-Power nozzle and digital screen with points icon overlay.",
-          "alt_text": "Shell V-Power pump nozzle close-up",
-          "image": {
-            "country": "UK",
-            "countryDescription": "",
-            "product": "Shell V-Power",
-            "productDescription": "",
-            "prompt": "Close-up pump shot of Shell V-Power nozzle and digital screen with points icon overlay.",
-            "filename": "1754306919644-4zuvl3-uk-shell-v-power.png",
-            "path": "/Users/pap/development/shell/marketing-campaign/public/images/1754306919644-4zuvl3-uk-shell-v-power.png",
-            "url": "/images/1754306919644-4zuvl3-uk-shell-v-power.png"
-          },
-          "url": "/images/1754306919644-4zuvl3-uk-shell-v-power.png"
+          "prompt": "Close-up of the 2025/26 home kit fabric, showing crest detail and typography.",
+          "alt_text": "Close-up of new kit crest",
+          "url": "public/images/ManCity/logo-close-up2.png"
         },
         {
           "name": "Product mosaic",
-          "prompt": "3-frame strip — open road with blue sky, Shell V-Power pump, GO+ app scan moment.",
-          "alt_text": "Shell GO+ app scanning at till",
-          "image": {
-            "country": "UK",
-            "countryDescription": "",
-            "product": "Shell V-Power",
-            "productDescription": "",
-            "prompt": "3-frame strip — open road with blue sky, Shell V-Power pump, GO+ app scan moment.",
-            "filename": "1754306958500-e1w850-uk-shell-v-power.png",
-            "path": "/Users/pap/development/shell/marketing-campaign/public/images/1754306958500-e1w850-uk-shell-v-power.png",
-            "url": "/images/1754306958500-e1w850-uk-shell-v-power.png"
-          },
-          "url": "/images/1754306958500-e1w850-uk-shell-v-power.png"
+          "prompt": "3-frame strip — stadium shot, kit on display, fan celebrating in new kit.",
+          "alt_text": "Mosaic of stadium, kit, and fans",
+          "url": "public/images/ManCity/logo-close-up.png"
         }
       ]
     },
     {
-      "id": "1754311222652_vo70y4",
-      "created_at": "2025-08-04T12:40:22.653Z",
-      "offer_summary": "Buy any iced coffee on three separate visits this summer and get your next iced coffee free.",
-      "mechanic": "Activate in GO+ → Buy any iced coffee on 3 separate visits (min. £2 each) → Scan app/card/key fob each time → Receive a voucher for 1 free iced coffee after your 3rd purchase.",
-      "timing_window": "10 June – 31 August 2025",
-      "targeting": "GO+ members who purchase coffee or cold beverages; NFR segments: Independent Enthusiasts, Spontaneous Indulgers, Quick Fixer.",
-      "creative_direction": "Hero: ‘stamp card’ visual with three iced coffees ticked and one glowing ‘FREE’. Secondary: sunny forecourt walk-in with iced coffee in hand. Optional subtle motion/GIF for stamps filling in.",
+      "id": "20250901_mcfc_womensteam",
+      "created_at": "2025-08-20T14:00:00.000Z",
+      "offer_summary": "Support the City Women’s Team — buy 2 match tickets and get a free official scarf.",
+      "mechanic": "Purchase at least 2 tickets for Manchester City Women’s matches → Scan membership/app ID → Collect a free official City scarf at the stadium.",
+      "timing_window": "20 August – 31 October 2025",
+      "targeting": "Family Fans, Casual Supporters, Community Members.",
+      "creative_direction": "Hero: Manchester City Women’s players celebrating a goal, scarf held high by fans in the stands. Bright sky blue tones with gold accent. Secondary: family walking into stadium with City gear.",
       "cta": {
-        "text": "Activate coffee stamps",
+        "text": "Book tickets",
         "url": "PLACEHOLDER"
       },
-      "legal": "UK GO+ members only. Activation required before qualifying purchases. Three qualifying iced coffee purchases (each ≥£2, any size unless excluded) must be made on separate visits between 10/06/25 – 31/08/25 at participating UK stations. Free iced coffee voucher issued to GO+ within 24 hours of the 3rd qualifying purchase; voucher valid 14 days from issue. Subject to availability. Excludes multi-buys and other coffee offers. No cash alternative. Full T&Cs apply. For participating sites, see: PLACEHOLDER.",
+      "legal": "Offer valid until 31/10/25. Applies to Women’s Super League fixtures only. Minimum 2 tickets required. Free scarf must be collected on match day at designated collection points. Limited stock available. Full T&Cs apply.",
       "email_template": {
-        "subject_line": "Buy 3 iced coffees, get 1 free",
-        "preheader": "Scan. Sip. Repeat. Your summer coffee is on us after three visits.",
-        "body": "Scan. Sip. Repeat.\n\n{{member_name}}, make the most of sunny days with a cool reward. Pick up any iced coffee on three separate visits and your next one is free — easy.\n\nWhy it’s a win\n• Your go-to cool down, now with a freebie\n• Works with your routine — just scan each visit\n• Ready fast for life on the move\n\nHow it works\n1) Activate the offer in Shell GO+\n2) Buy any iced coffee on three separate visits (min. £2 each) between 10 June – 31 August 2025\n3) Scan your GO+ app, card or key fob each time\n4) Get a free iced coffee voucher after your 3rd purchase (valid 14 days)\n\nPrimary CTA: Activate coffee stamps (PLACEHOLDER)\nSecondary CTA: Find your nearest station (PLACEHOLDER)\n\nUK GO+ members only. Activation required before qualifying purchases. Purchases must be on separate visits. Voucher terms apply. Full T&Cs available at the link."
-      },
-      "design_notes": "Use a clean stamp-card motif and clear progress cues. Shell Yellow/Red accents on white; simple iconography for ‘3 purchases → 1 free’. Keep body copy scannable. Optimise for mobile screens.",
-      "production_notes": "Insert live GO+ activation deep link and station finder URLs. Ensure UK forecourt/store imagery: UK plates, right-hand drive, diverse customers, in-store scan scenes. No CSC fueling visuals; HSSE-compliant behaviours. Ensure voucher delivery flow aligns with MAP and redemption at POS.",
+        "subject_line": "Cheer on City Women + get a free scarf",
+        "preheader": "Buy 2 tickets to see the City Women and claim your scarf at the stadium.",
+        "body": "This season, our City Women need you, {{member_name}}.\n\nBring your family, friends, and passion to the stands — and as a thank you, when you buy 2 tickets you’ll receive a free official Manchester City scarf.\n\nWhy it’s unmissable:\n• Watch world-class players at the Academy Stadium\n• Experience the family-friendly atmosphere\n• Take home your scarf as a keepsake\n\nHow it works:\n1) Buy 2 tickets to any Women’s Super League fixture\n2) Scan your Cityzens membership/app ID\n3) Collect your free scarf on match day\n\nPrimary CTA: Book tickets (PLACEHOLDER)\nSecondary CTA: See fixtures (PLACEHOLDER)\n\nOffer valid for Cityzens members only. Scarf subject to availability.",
+      "design_notes": "Use fan imagery with visible scarves. Keep warm and inclusive tone. Sky blue dominance with Etihad Gold accent for premium feel.",
+      "production_notes": "Insert live ticketing links. Ensure women’s team assets are current and player likenesses approved. Highlight diversity and inclusivity in fan imagery.",
       "country": "UK",
-      "product": "Iced coffee (Shell Café/Costa Express where available)",
+      "product": "Manchester City Women’s Match Tickets",
       "assets": [
         {
           "name": "Hero",
-          "prompt": "Four iced coffees on a simple grid; three stamped/checked, the fourth highlighted ‘FREE’; bright summer lighting; Shell colour accents.",
-          "alt_text": "Iced coffee stamp card — three done, one free",
-          "image": {
-            "country": "UK",
-            "countryDescription": "",
-            "product": "Iced coffee (Shell Café/Costa Express where available)",
-            "productDescription": "",
-            "prompt": "Four iced coffees on a simple grid; three stamped/checked, the fourth highlighted ‘FREE’; bright summer lighting; Shell colour accents.\n\nFollow these constraints and context:\n- Country (UK): Black pumps for Diesel (MG & SVP), Green pumps for Petrol (MG & SVP). Right-hand drive, UK plates. Local stations only, no foreign anomalies. No CSC fueling on forecourt, in-store interactions only. Diverse models (Black male ~35, White female ~35, mixed-race family with two children, older White couple ~55, high-visibility worker). Seasonal UK imagery, families browsing snacks/drinks, Costa coffee, EV charging with coffee breaks.\n- Product (Iced coffee (Shell Café/Costa Express where available)): Shell's in-station café offering coffee, snacks, and fresh food.",
-            "filename": "1754311267539-mcw9uu-uk-iced-coffee-shell-cafecosta-express-where-available.png",
-            "path": "/Users/pap/development/shell/marketing-campaign/public/images/1754311267539-mcw9uu-uk-iced-coffee-shell-cafecosta-express-where-available.png",
-            "url": "/images/1754311267539-mcw9uu-uk-iced-coffee-shell-cafecosta-express-where-available.png"
-          },
-          "url": "/images/1754311267539-mcw9uu-uk-iced-coffee-shell-cafecosta-express-where-available.png"
+          "prompt": "Manchester City Women players celebrating a goal, fans in background holding scarves, stadium lights in evening setting.",
+          "alt_text": "City Women celebrate with scarf-waving fans",
+          "url": "/images/20250901-womensteam-hero.png"
         },
         {
           "name": "Secondary image",
-          "prompt": "Customer exiting UK Shell Select/Café holding iced coffee; sunny day; station branding visible; safe pedestrian zone.",
-          "alt_text": "Customer leaves Shell shop with iced coffee",
-          "image": {
-            "country": "UK",
-            "countryDescription": "",
-            "product": "Iced coffee (Shell Café/Costa Express where available)",
-            "productDescription": "",
-            "prompt": "Customer exiting UK Shell Select/Café holding iced coffee; sunny day; station branding visible; safe pedestrian zone.\n\nFollow these constraints and context:\n- Country (UK): Black pumps for Diesel (MG & SVP), Green pumps for Petrol (MG & SVP). Right-hand drive, UK plates. Local stations only, no foreign anomalies. No CSC fueling on forecourt, in-store interactions only. Diverse models (Black male ~35, White female ~35, mixed-race family with two children, older White couple ~55, high-visibility worker). Seasonal UK imagery, families browsing snacks/drinks, Costa coffee, EV charging with coffee breaks.\n- Product (Iced coffee (Shell Café/Costa Express where available)): Shell's in-station café offering coffee, snacks, and fresh food.",
-            "filename": "1754311284691-yw0rxo-uk-iced-coffee-shell-cafecosta-express-where-available.png",
-            "path": "/Users/pap/development/shell/marketing-campaign/public/images/1754311284691-yw0rxo-uk-iced-coffee-shell-cafecosta-express-where-available.png",
-            "url": "/images/1754311284691-yw0rxo-uk-iced-coffee-shell-cafecosta-express-where-available.png"
-          },
-          "url": "/images/1754311284691-yw0rxo-uk-iced-coffee-shell-cafecosta-express-where-available.png"
+          "prompt": "Family walking into the stadium wearing City gear, holding tickets and smiling.",
+          "alt_text": "Family arriving at stadium",
+          "url": "/images/20250901-womensteam-secondary.png"
         },
         {
           "name": "Animated/GIF option",
-          "prompt": "Subtle animation of stamps filling with each ‘scan’ ping; final tile flashes ‘FREE’ then settles.",
-          "alt_text": "Stamps filling animation for iced coffee progress",
-          "image": {
-            "country": "UK",
-            "countryDescription": "",
-            "product": "Iced coffee (Shell Café/Costa Express where available)",
-            "productDescription": "",
-            "prompt": "Subtle animation of stamps filling with each ‘scan’ ping; final tile flashes ‘FREE’ then settles.\n\nFollow these constraints and context:\n- Country (UK): Black pumps for Diesel (MG & SVP), Green pumps for Petrol (MG & SVP). Right-hand drive, UK plates. Local stations only, no foreign anomalies. No CSC fueling on forecourt, in-store interactions only. Diverse models (Black male ~35, White female ~35, mixed-race family with two children, older White couple ~55, high-visibility worker). Seasonal UK imagery, families browsing snacks/drinks, Costa coffee, EV charging with coffee breaks.\n- Product (Iced coffee (Shell Café/Costa Express where available)): Shell's in-station café offering coffee, snacks, and fresh food.",
-            "filename": "1754311273396-qe70oh-uk-iced-coffee-shell-cafecosta-express-where-available.png",
-            "path": "/Users/pap/development/shell/marketing-campaign/public/images/1754311273396-qe70oh-uk-iced-coffee-shell-cafecosta-express-where-available.png",
-            "url": "/images/1754311273396-qe70oh-uk-iced-coffee-shell-cafecosta-express-where-available.png"
-          },
-          "url": "/images/1754311273396-qe70oh-uk-iced-coffee-shell-cafecosta-express-where-available.png"
+          "prompt": "Scarf animation waving in City blue and white, overlaid with 'Come On City!'",
+          "alt_text": "Animated waving scarf",
+          "url": "/images/20250901-womensteam-animated.png"
         }
-      ],
-      "updated_at": "2025-08-04T12:41:24.694Z"
+      ]
     }
   ]
 }
