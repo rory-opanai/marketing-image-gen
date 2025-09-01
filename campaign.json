@@ -16,7 +16,8 @@
       "email_template": {
         "subject_line": "Be first in the new City kit + unlock your stadium tour discount",
         "preheader": "Pre-order the 2025/26 kit and we’ll add 20% off your Etihad Stadium Tour.",
-        "body": "It’s here, {{member_name}} — the 2025/26 Manchester City home kit.\n\nWear it with pride, on and off the pitch, and celebrate like a champion. As a bonus, you’ll receive 20% off your next Etihad Stadium Tour when you order today.\n\nWhy this kit matters:\n• Inspired by Manchester’s industrial heritage\n• Crafted for performance and comfort\n• The ultimate way to show your City pride\n\nHow it works:\n1) Pre-order or purchase the 2025/26 home kit\n2) Scan your Cityzens membership/app ID\n3) Receive a 20% Stadium Tour voucher (valid 90 days)\n\nPrimary CTA: Pre-order now (PLACEHOLDER)\nSecondary CTA: Learn more about the kit (PLACEHOLDER)\n\nOffer valid for Cityzens members. Tour voucher terms apply. Subject to availability.",
+        "body": "It’s here, {{member_name}} — the 2025/26 Manchester City home kit.\n\nWear it with pride, on and off the pitch, and celebrate like a champion. As a bonus, you’ll receive 20% off your next Etihad Stadium Tour when you order today.\n\nWhy this kit matters:\n• Inspired by Manchester’s industrial heritage\n• Crafted for performance and comfort\n• The ultimate way to show your City pride\n\nHow it works:\n1) Pre-order or purchase the 2025/26 home kit\n2) Scan your Cityzens membership/app ID\n3) Receive a 20% Stadium Tour voucher (valid 90 days)\n\nPrimary CTA: Pre-order now (PLACEHOLDER)\nSecondary CTA: Learn more about the kit (PLACEHOLDER)\n\nOffer valid for Cityzens members. Tour voucher terms apply. Subject to availability."
+      },
       "design_notes": "Keep crest always visible. 60% sky blue, 20% white, 15% navy, 5% Etihad Gold. Use clean stadium and player imagery. Maintain authenticity — no stock sports visuals.",
       "production_notes": "Insert live store links. Ensure kit photography meets brand style (action shots, fan moments, stadium backdrops). Avoid sponsor/logo alterations. Use official Pantone colors.",
       "country": "UK",
@@ -26,19 +27,19 @@
           "name": "Hero",
           "prompt": "Erling Haaland presenting the new Manchester City home kit alongside a young fan inside Etihad Stadium, sky blue dominance, cheering fans blurred in background.",
           "alt_text": "Haaland and young fan reveal 2025/26 home kit",
-          "url": "public/images/ManCity/player-fan.png"
+          "url": "/images/ManCity/player-fan.png"
         },
         {
           "name": "Secondary image",
           "prompt": "Close-up of the 2025/26 home kit fabric, showing crest detail and typography.",
           "alt_text": "Close-up of new kit crest",
-          "url": "public/images/ManCity/logo-close-up2.png"
+          "url": "/images/ManCity/logo-close-up2.png"
         },
         {
           "name": "Product mosaic",
           "prompt": "3-frame strip — stadium shot, kit on display, fan celebrating in new kit.",
           "alt_text": "Mosaic of stadium, kit, and fans",
-          "url": "public/images/ManCity/logo-close-up.png"
+          "url": "/images/ManCity/logo-close-up.png"
         }
       ]
     },
@@ -58,7 +59,8 @@
       "email_template": {
         "subject_line": "Cheer on City Women + get a free scarf",
         "preheader": "Buy 2 tickets to see the City Women and claim your scarf at the stadium.",
-        "body": "This season, our City Women need you, {{member_name}}.\n\nBring your family, friends, and passion to the stands — and as a thank you, when you buy 2 tickets you’ll receive a free official Manchester City scarf.\n\nWhy it’s unmissable:\n• Watch world-class players at the Academy Stadium\n• Experience the family-friendly atmosphere\n• Take home your scarf as a keepsake\n\nHow it works:\n1) Buy 2 tickets to any Women’s Super League fixture\n2) Scan your Cityzens membership/app ID\n3) Collect your free scarf on match day\n\nPrimary CTA: Book tickets (PLACEHOLDER)\nSecondary CTA: See fixtures (PLACEHOLDER)\n\nOffer valid for Cityzens members only. Scarf subject to availability.",
+        "body": "This season, our City Women need you, {{member_name}}.\n\nBring your family, friends, and passion to the stands — and as a thank you, when you buy 2 tickets you’ll receive a free official Manchester City scarf.\n\nWhy it’s unmissable:\n• Watch world-class players at the Academy Stadium\n• Experience the family-friendly atmosphere\n• Take home your scarf as a keepsake\n\nHow it works:\n1) Buy 2 tickets to any Women’s Super League fixture\n2) Scan your Cityzens membership/app ID\n3) Collect your free scarf on match day\n\nPrimary CTA: Book tickets (PLACEHOLDER)\nSecondary CTA: See fixtures (PLACEHOLDER)\n\nOffer valid for Cityzens members only. Scarf subject to availability."
+      },
       "design_notes": "Use fan imagery with visible scarves. Keep warm and inclusive tone. Sky blue dominance with Etihad Gold accent for premium feel.",
       "production_notes": "Insert live ticketing links. Ensure women’s team assets are current and player likenesses approved. Highlight diversity and inclusivity in fan imagery.",
       "country": "UK",
@@ -68,19 +70,19 @@
           "name": "Hero",
           "prompt": "Manchester City Women players celebrating a goal, fans in background holding scarves, stadium lights in evening setting.",
           "alt_text": "City Women celebrate with scarf-waving fans",
-          "url": "public/images/ManCity/female-team1.png"
+          "url": "/images/ManCity/female-team1.png"
         },
         {
           "name": "Secondary image",
           "prompt": "Family walking into the stadium wearing City gear, holding tickets and smiling.",
           "alt_text": "Family arriving at stadium",
-          "url": "public/images/ManCity/female-team2.png"
+          "url": "/images/ManCity/female-team2.png"
         },
         {
           "name": "Animated/GIF option",
           "prompt": "Scarf animation waving in City blue and white, overlaid with 'Come On City!'",
           "alt_text": "Animated waving scarf",
-          "url": "public/images/ManCity/female-team1.png"
+          "url": "/images/ManCity/female-team1.png"
         }
       ]
     }

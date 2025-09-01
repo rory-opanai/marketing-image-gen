@@ -113,6 +113,43 @@ async function ensureDirs() {
   }
 }
 
+// Seed the writable campaigns file from the bundled campaign.json on first run or when empty
+async function bootstrapCampaignsFromBundledFile() {
+  try {
+    // Check existing campaigns at the writable location
+    let existing = [];
+    try {
+      const raw = await fs.readFile(CAMPAIGNS_FILE, 'utf8');
+      const json = JSON.parse(raw);
+      if (Array.isArray(json?.data)) existing = json.data;
+      else if (Array.isArray(json)) existing = json;
+    } catch (_) {
+      // No existing file or invalid JSON; treat as empty
+      existing = [];
+    }
+
+    if (existing.length > 0) {
+      return; // Already have data; no bootstrap needed
+    }
+
+    const bundledPath = path.join(ROOT_DIR, 'campaign.json');
+    if (!fssync.existsSync(bundledPath)) return;
+
+    const bundledRaw = await fs.readFile(bundledPath, 'utf8');
+    const bundledJson = JSON.parse(bundledRaw);
+    const list = Array.isArray(bundledJson?.data)
+      ? bundledJson.data
+      : (Array.isArray(bundledJson) ? bundledJson : []);
+
+    if (list.length > 0) {
+      await writeCampaignsList(list);
+      log('Bootstrapped campaigns from bundled campaign.json to', CAMPAIGNS_FILE);
+    }
+  } catch (e) {
+    log('Skipping bootstrap of campaigns due to error:', e && e.message ? e.message : e);
+  }
+}
+
 // Basic middleware
 app.use(express.json({ limit: '4mb' }));
 
@@ -601,9 +638,11 @@ module.exports = app;
 
 // Start server locally only when executed directly
 if (require.main === module) {
-  ensureDirs().then(() => {
-    app.listen(port, () => {
-      log(`Server is running on http://localhost:${port}`);
+  ensureDirs()
+    .then(() => bootstrapCampaignsFromBundledFile())
+    .then(() => {
+      app.listen(port, () => {
+        log(`Server is running on http://localhost:${port}`);
+      });
     });
-  });
 }
