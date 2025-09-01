@@ -155,9 +155,9 @@ const countryGuidelines = [
     { LX: "Green Mogas/Petrol, Red V-Power Mogas/Petrol. Same vehicle/location rules as PL." },
     { TR: "Grey diesel pumps, green petrol pumps. Left-hand drive, Turkish plates, local car models. Turkish landscapes, Shell Select shops, full CVP visuals. Turkish people only, Bayram celebrations, fasting month, no Christmas. HSSE-focused imagery, typical customers 40+ families." },
     { CZ: "SFS Diesel (black), SFS 95 (green), SVP 95 (red), SVP Racing (red nozzle). Left-hand drive, EU plates blurred. Local station images, Shell Café, ClubSmart branding, minimal EV chargers. Western/European people (not too Scandinavian). Major holidays (Christmas, Easter, New Year). CSC interactions in shop/forecourt." },
-    { SK: "Same as CZ." },
-    { HU: "Same as CZ." },
-    { BG: "Same as CZ, includes Shell AutoGas LPG." },
+    { SK: "SFS Diesel (black), SFS 95 (green), SVP 95 (red), SVP Racing (red nozzle). Left-hand drive, EU plates blurred. Local station images, Shell Café, ClubSmart branding, minimal EV chargers. Western/European people (not too Scandinavian). Major holidays (Christmas, Easter, New Year). CSC interactions in shop/forecourt." },
+    { HU: "SFS Diesel (black), SFS 95 (green), SVP 95 (red), SVP Racing (red nozzle). Left-hand drive, EU plates blurred. Local station images, Shell Café, ClubSmart branding, minimal EV chargers. Western/European people (not too Scandinavian). Major holidays (Christmas, Easter, New Year). CSC interactions in shop/forecourt." },
+    { BG: "SFS Diesel (black), SFS 95 (green), SVP 95 (red), SVP Racing (red nozzle). Left-hand drive, EU plates blurred. Local station images, Shell Café, ClubSmart branding, minimal EV chargers. Western/European people (not too Scandinavian). Major holidays (Christmas, Easter, New Year). CSC interactions in shop/forecourt." },
     { TH: "Separate pumps: V-Power (VPG & VPD), Maingrade (Mogas & Diesel). Light-duty vehicles, motorcycles, brands like Honda, Toyota, BMW, Porsche. Separate V-Power vs normal stations." },
     { PH: "Not specified for fuel pumps. Asian-looking customers." }
   ];
