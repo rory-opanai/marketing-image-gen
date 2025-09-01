@@ -1,11 +1,12 @@
 const express = require('express');
 const fs = require('fs/promises');
 const fssync = require('fs');
+const os = require('os');
 const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 3000;
-const APP_URL = process.env.APP_URL || `http://localhost:${port}`;
+const APP_URL = process.env.APP_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : `http://localhost:${port}`);
 const IMAGE_CONCURRENCY = Math.max(1, Number(process.env.IMAGE_CONCURRENCY || 10));
 const REQUEST_API_KEY = "37af22c9821443618e0737b752a7ea6a";
 
@@ -13,9 +14,11 @@ const REQUEST_API_KEY = "37af22c9821443618e0737b752a7ea6a";
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY || '';
 const ROOT_DIR = __dirname;
 const PUBLIC_DIR = path.join(ROOT_DIR, 'public');
+const DEFAULT_UPLOADS_ROOT = path.join(os.tmpdir(), 'marketing-image-gen');
 
-// Writable paths for Render/basic Node: prefer IMAGES_DIR env; default to uploads/images
-const UPLOADS_ROOT = process.env.UPLOADS_DIR || (process.env.IMAGES_DIR ? path.dirname(process.env.IMAGES_DIR) : path.join(ROOT_DIR, 'uploads'));
+// Writable paths for Render/basic Node: prefer env-provided paths; default to /tmp for Vercel compatibility
+const UPLOADS_ROOT =
+  process.env.UPLOADS_DIR || (process.env.IMAGES_DIR ? path.dirname(process.env.IMAGES_DIR) : DEFAULT_UPLOADS_ROOT);
 const IMAGES_DIR = process.env.IMAGES_DIR || path.join(UPLOADS_ROOT, 'images');
 const PUBLIC_IMAGES_DIR = path.join(PUBLIC_DIR, 'images');
 const CAMPAIGNS_FILE = process.env.CAMPAIGNS_FILE || path.join(UPLOADS_ROOT, 'campaigns.json');
