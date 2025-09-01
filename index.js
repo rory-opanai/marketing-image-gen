@@ -19,10 +19,15 @@ const UPLOADS_ROOT = process.env.UPLOADS_DIR || (process.env.IMAGES_DIR ? path.d
 const IMAGES_DIR = process.env.IMAGES_DIR || path.join(UPLOADS_ROOT, 'images');
 const PUBLIC_IMAGES_DIR = path.join(PUBLIC_DIR, 'images');
 const CAMPAIGNS_FILE = process.env.CAMPAIGNS_FILE || path.join(UPLOADS_ROOT, 'campaigns.json');
+const USE_MEMORY_CAMPAIGNS = Boolean(process.env.IN_MEMORY_CAMPAIGNS);
+let memoryCampaigns = [];
 
 // Filesystem campaign store helpers (Render/local)
 // Persist campaigns at CAMPAIGNS_FILE in the shape: { data: [...] }
 async function readCampaignsList() {
+  if (USE_MEMORY_CAMPAIGNS) {
+    return memoryCampaigns;
+  }
   try {
     const raw = await fs.readFile(CAMPAIGNS_FILE, 'utf8');
     const json = JSON.parse(raw);
@@ -41,6 +46,11 @@ async function readCampaignsList() {
 }
 
 async function writeCampaignsList(list) {
+  if (USE_MEMORY_CAMPAIGNS) {
+    memoryCampaigns = Array.isArray(list) ? [...list] : [];
+    log('Campaigns stored in memory (IN_MEMORY_CAMPAIGNS enabled).');
+    return memoryCampaigns;
+  }
   const dir = path.dirname(CAMPAIGNS_FILE);
   if (!fssync.existsSync(dir)) fssync.mkdirSync(dir, { recursive: true });
   await fs.writeFile(CAMPAIGNS_FILE, JSON.stringify({ data: list }, null, 2), 'utf8');
