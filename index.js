@@ -7,7 +7,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 const APP_URL = process.env.APP_URL || `http://localhost:${port}`;
 const IMAGE_CONCURRENCY = Math.max(1, Number(process.env.IMAGE_CONCURRENCY || 10));
-const REQUEST_API_KEY = "37af22c9821443618e0737b752a7ea6a";
+const REQUEST_API_KEY = "ec76026ddf99e78fbeada80fd9387611";
 
 // Configuration
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY || '';
