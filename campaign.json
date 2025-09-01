@@ -68,19 +68,19 @@
           "name": "Hero",
           "prompt": "Manchester City Women players celebrating a goal, fans in background holding scarves, stadium lights in evening setting.",
           "alt_text": "City Women celebrate with scarf-waving fans",
-          "url": "/images/20250901-womensteam-hero.png"
+          "url": "public/images/ManCity/female-team1.png"
         },
         {
           "name": "Secondary image",
           "prompt": "Family walking into the stadium wearing City gear, holding tickets and smiling.",
           "alt_text": "Family arriving at stadium",
-          "url": "/images/20250901-womensteam-secondary.png"
+          "url": "public/images/ManCity/female-team2.png"
         },
         {
           "name": "Animated/GIF option",
           "prompt": "Scarf animation waving in City blue and white, overlaid with 'Come On City!'",
           "alt_text": "Animated waving scarf",
-          "url": "/images/20250901-womensteam-animated.png"
+          "url": "public/images/ManCity/female-team1.png"
         }
       ]
     }
